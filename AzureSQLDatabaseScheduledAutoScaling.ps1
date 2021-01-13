@@ -146,21 +146,11 @@ $startTime = $newTime
 $currentDayOfWeek = [Int]($startTime).DayOfWeek
 Write-Output "Current day of week: $currentDayOfWeek." | timestamp
 
-Write-Output "here 1" | timestamp
-
 # Get the scaling schedule for the current day of week
 $dayObjects = $stateConfig | Where-Object {$_.WeekDays -contains $currentDayOfWeek } `
 |Select-Object Edition, Tier, `
 @{Name="StartTime"; Expression = {[datetime]::ParseExact(($startTime.ToString("yyyy:MM:dd")+”:”+$_.StartTime),"yyyy:MM:dd:HH:mm:ss", [System.Globalization.CultureInfo]::InvariantCulture)}}, `
 @{Name="StopTime"; Expression = {[datetime]::ParseExact(($startTime.ToString("yyyy:MM:dd")+”:”+$_.StopTime),"yyyy:MM:dd:HH:mm:ss", [System.Globalization.CultureInfo]::InvariantCulture)}}
-
-Write-Output "here 2" | timestamp
-
-# Get the scaling schedule for the current day of week
-# $dayObjects = $stateConfig | Where-Object {$_.WeekDays -contains $currentDayOfWeek } `
-# |Select-Object Edition, Tier, `
-# @{Name="StartTime"; Expression = {[datetime]::ParseExact(($startTime.ToString("yyyy:MM:dd")+â€:â€+$_.StartTime),"yyyy:MM:dd:HH:mm:ss", [System.Globalization.CultureInfo]::InvariantCulture)}}, `
-# @{Name="StopTime"; Expression = {[datetime]::ParseExact(($startTime.ToString("yyyy:MM:dd")+â€:â€+$_.StopTime),"yyyy:MM:dd:HH:mm:ss", [System.Globalization.CultureInfo]::InvariantCulture)}}
 
 # Get the database object
 $sqlDB = Get-AzureRmSqlDatabase `
